@@ -11,9 +11,9 @@ public class Caisse {
 	private String client_total;
 	private String happy_client;
 	private String unhappy_client;
-	private ArrayList clients;
+	private ArrayList<ArrayList<String>> clients;
 	
-	public Caisse (String name, String status, String v_moy, String v_max, String client_total, String happy_client, String unhappy_client, ArrayList clients) {
+	public Caisse (String name, String status, String v_moy, String v_max, String client_total, String happy_client, String unhappy_client, ArrayList<ArrayList<String>> clients) {
 		
 		this.name = name;
 		this.status = status;
@@ -25,7 +25,7 @@ public class Caisse {
 		this.clients= clients;
 	}
 
-	public ArrayList getClients() {
+	public ArrayList<ArrayList<String>> getClients() {
 		return clients;
 	}
 

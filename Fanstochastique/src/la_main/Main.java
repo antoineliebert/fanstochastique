@@ -1,46 +1,50 @@
 package la_main;
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 public class Main {
 	
-	private static int b;
 
 	public static void main(String[] args) {
-		//system.out.println("o");
-		BufferedReader br = null;
-        StringBuilder sb = new StringBuilder();
-        String line;
-        FileInputStream fis = null;
+
+		
+
+        ArrayList<ArrayList<Caisse>> data_AL = new ArrayList<ArrayList<Caisse>>();
+
+        data_AL = importTheJSON();
+		
         
-        String chaine="";
-        
+	}
+	
+	public static String readFile(String path, Charset encoding) throws IOException 
+			{
+			  byte[] encoded = Files.readAllBytes(Paths.get(path));
+			  return new String(encoded, encoding);
+			}
+	
+	
+	public static ArrayList<ArrayList<Caisse>> importTheJSON(){
+		
         JSONParser parser = new JSONParser();
+        
         JSONArray jsonDataArray;
         JSONArray jsonCaisseArray;
+        JSONArray jsonClientsArray;
         
-        ArrayList data_AL = new ArrayList();
-        ArrayList ti_AL = new ArrayList();
-        ArrayList clients = new ArrayList();
-        
+        ArrayList<ArrayList<Caisse>> data_AL = new ArrayList<ArrayList<Caisse>>();
+        ArrayList<Caisse> ti_AL = new ArrayList<Caisse>(); // ti_AL contient le string temps et un objet Caisse
+        ArrayList<ArrayList<String>> clients_AL = new ArrayList<ArrayList<String>>();
+        ArrayList<String> clientSeul_AL = new ArrayList<String>();
+
         
         String name;
         String status;
@@ -49,83 +53,71 @@ public class Main {
         String client_total;
         String happy_client;
         String unhappy_client;
+        String statusClient;
+        String theta_s;
         
         try {
  
-            Object obj = parser.parse(new FileReader(
-                    "C:\\Users\\Antoine\\Desktop\\ESIEA\\4AS2\\Processus stochastiques\\projet\\format.json"));
- 
-            //JSONObject jsonObject = (JSONObject) obj;
             
-            String content = readFile("C:\\Users\\Antoine\\Desktop\\ESIEA\\4AS2\\Processus stochastiques\\projet\\format.json", StandardCharsets.UTF_8);
+            String content = readFile("C:\\Users\\Anto\\Desktop\\projet\\format.json", StandardCharsets.UTF_8);
             
-            //JSONObject response = jsonObject.getJSONObject("response");
-            //JSONArray jsonArray = jsonObject.optJSONArray("data");
             JSONObject jsonRootObject = new JSONObject(content);
 
             jsonDataArray = jsonRootObject.optJSONArray("data");
             
-            for (int i = 0; i < jsondataArray.length(); i++) {
+            for (int i = 0; i < jsonDataArray.length(); i++) { // Pour tous les temps ti
             	
-            	JSONObject time_JSONobj = jsonDataArray.getJSONObject(i);
+            	JSONObject time_JSONobj = jsonDataArray.getJSONObject(i); // On sélectionne le jsonobject temps ti
             	
-            	ti_AL.add(time_JSONobj.optString("time"));
+            	ti_AL = new ArrayList<Caisse>();
             	
-            	jsonCaisseArray = time_JSONobj.optJSONArray("caisses");
+            	jsonCaisseArray = time_JSONobj.optJSONArray("caisses"); // L'array de json objects caisses
             	
-            	for (int j = 0; j < jsonCaisseArray.length(); j++){
+            	for (int j = 0; j < jsonCaisseArray.length(); j++){ // pour chaque caisse j
             		JSONObject caisse_JSONobj = jsonCaisseArray.getJSONObject(j);
-            		name = caisse_JSONobj.optString("name");
             		
-            		ti_AL.add(new );
+            		            		
+            		name = caisse_JSONobj.optString("name");
+            		status = caisse_JSONobj.optString("status");
+            		v_moy = caisse_JSONobj.optString("v_moy");
+            		v_max = caisse_JSONobj.optString("v_max");
+            		client_total = caisse_JSONobj.optString("client_total");
+            		happy_client = caisse_JSONobj.optString("happy_client");
+            		unhappy_client = caisse_JSONobj.optString("unhappy_client");
+            		System.out.println(client_total);
+            		jsonClientsArray = caisse_JSONobj.optJSONArray("clients"); // L'array de json objects clients
+
+            		clients_AL = new ArrayList<ArrayList<String>>();
+            		
+            		for (int k = 0; k < jsonClientsArray.length(); k++){ // pour chaque client k
+            			JSONObject client_JSONobj = jsonClientsArray.getJSONObject(k);
+
+            			clientSeul_AL = new ArrayList<String>();
+            			
+            			statusClient = client_JSONobj.optString("status");
+            			theta_s = client_JSONobj.optString("theta_s");
+            			clientSeul_AL.add(statusClient);
+            			clientSeul_AL.add(theta_s);
+            			
+            			clients_AL.add(clientSeul_AL);
+            			
+            		}
+            		
+            		ti_AL.add(new Caisse(name,status,v_moy,v_max,client_total, happy_client, unhappy_client,clients_AL));
+            		
+            		
             	}
             	
+            	data_AL.add(ti_AL);
             
-            	data.add(ti_AL);
             }
             
-            JSONObject time = jsonArray.getJSONObject(0);
-            
-        	b = 3;
-            JSONArray jsonArray = jsonRootObject.optJSONArray("clients");
-            
-            int a = 2;
+            //System.out.println(data_AL.get(0).get(1).getClients().get(2).get(0));
+ 
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        /*
-		try {
-      
-
-            
-            
-            nb_notes = 0;
-            for (int i = 0; i < jsonArray2.length(); i++) {
-                JSONObject jsonObject2 = jsonArray2.getJSONObject(i);
-
-                String ID = jsonObject2.optString("ID");
-                String NOTE = jsonObject2.optString("NOTE");
-                String COMMENTAIRES = jsonObject2.optString("COMMENTAIRES").toString();
-                String ADDR_MAC = jsonObject2.optString("ADDR_MAC").toString();
-                String ZONE1 = jsonObject2.optString("ZONE").toString();
-
-                if (ZONE1.equals(zone)) {
-                    notesdb[nb_notes][0] = ID;
-                    notesdb[nb_notes][1] = NOTE;
-                    notesdb[nb_notes][2] = COMMENTAIRES;
-                    notesdb[nb_notes][3] = ADDR_MAC;
-
-                    nb_notes ++;
-                }
-            }*/
+        return data_AL;
 	}
-	
-	static String readFile(String path, Charset encoding) 
-			  throws IOException 
-			{
-			  byte[] encoded = Files.readAllBytes(Paths.get(path));
-			  return new String(encoded, encoding);
-			}
-	
 }
