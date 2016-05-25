@@ -8,9 +8,10 @@ public class Caisse {
 	private String status;
 	private String v_moy;
 	private String v_max;
-	private String client_total;
+	private int client_total;
 	private String happy_client;
 	private String unhappy_client;
+	private String neutral_client;
 	private ArrayList<ArrayList<String>> clients;
 	
 	public Caisse (String name, String status, String v_moy, String v_max, String client_total, String happy_client, String unhappy_client, ArrayList<ArrayList<String>> clients) {
@@ -19,9 +20,10 @@ public class Caisse {
 		this.status = status;
 		this.v_moy = v_moy;
 		this.v_max = v_max;
-		this.client_total = client_total;
+		this.client_total = Integer.parseInt(client_total);
 		this.happy_client = happy_client;
 		this.unhappy_client = unhappy_client;
+		this.neutral_client = String.valueOf(Integer.parseInt(client_total) - Integer.parseInt(happy_client) - Integer.parseInt(unhappy_client));
 		this.clients= clients;
 	}
 
@@ -45,7 +47,7 @@ public class Caisse {
 		return v_max;
 	}
 
-	public String getClient_total() {
+	public int getClient_total() {
 		return client_total;
 	}
 

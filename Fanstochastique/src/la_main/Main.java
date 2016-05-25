@@ -1,11 +1,16 @@
 package la_main;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+
+import javax.swing.JFileChooser;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,7 +22,6 @@ public class Main {
 	public static void main(String[] args) {
 
 		
-
         ArrayList<ArrayList<Caisse>> data_AL = new ArrayList<ArrayList<Caisse>>();
 
         data_AL = importTheJSON();
@@ -59,7 +63,7 @@ public class Main {
         try {
  
             
-            String content = readFile("C:\\Users\\Anto\\Desktop\\projet\\format.json", StandardCharsets.UTF_8);
+            String content = readFile("format.json", StandardCharsets.UTF_8);
             
             JSONObject jsonRootObject = new JSONObject(content);
 
@@ -84,7 +88,7 @@ public class Main {
             		client_total = caisse_JSONobj.optString("client_total");
             		happy_client = caisse_JSONobj.optString("happy_client");
             		unhappy_client = caisse_JSONobj.optString("unhappy_client");
-            		System.out.println(client_total);
+            		//System.out.println(client_total);
             		jsonClientsArray = caisse_JSONobj.optJSONArray("clients"); // L'array de json objects clients
 
             		clients_AL = new ArrayList<ArrayList<String>>();
