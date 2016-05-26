@@ -39,7 +39,6 @@ public class Main {
             // gestion de l'erreur
         }
         
-        jFrame.test();
         
         jFrame.repaint();
         

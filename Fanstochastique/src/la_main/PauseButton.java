@@ -42,8 +42,10 @@ public class PauseButton extends JButton implements MouseListener{
 public void paintComponent(Graphics g){
     Graphics2D g2d = (Graphics2D)g;
     g2d.clearRect(0, 0, this.getWidth(), this.getHeight());
-    g2d.drawImage(imgDisp, 0, 0, this.getWidth(), this.getHeight(), this);
-  }
+    //g2d.drawImage(imgDisp, 0, 0, this.getWidth(), this.getHeight(), this);
+    g2d.drawImage(imgDisp, 0, 0, 50, 50, this);
+    this.setBounds(0, 0, 50, 50);
+}
 
   public void mouseClicked(MouseEvent event) { 
 	  
