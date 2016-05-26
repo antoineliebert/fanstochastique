@@ -24,7 +24,7 @@ public class Caisse {
 		this.happy_client = happy_client;
 		this.unhappy_client = unhappy_client;
 		this.neutral_client = String.valueOf(Integer.parseInt(client_total) - Integer.parseInt(happy_client) - Integer.parseInt(unhappy_client));
-		this.clients= clients;
+		this.clients = clients;
 	}
 
 	public ArrayList<ArrayList<String>> getClients() {

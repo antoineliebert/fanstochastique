@@ -1,5 +1,6 @@
 package la_main;
 
+import java.awt.BorderLayout;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -25,7 +27,22 @@ public class Main {
         ArrayList<ArrayList<Caisse>> data_AL = new ArrayList<ArrayList<Caisse>>();
 
         data_AL = importTheJSON();
+        
+        JFrameClass jFrame = new JFrameClass(data_AL);
 		
+        jFrame.showFenetre();
+        
+        try {
+        	Thread.sleep(1000);
+        }  catch (InterruptedException e) {
+            
+            // gestion de l'erreur
+        }
+        
+        jFrame.test();
+        
+        jFrame.repaint();
+        
         
 	}
 	
