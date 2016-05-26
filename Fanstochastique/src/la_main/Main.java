@@ -30,17 +30,9 @@ public class Main {
         
         JFrameClass jFrame = new JFrameClass(data_AL);
 		
-        jFrame.showFenetre();
+        jFrame.paint();
         
-        try {
-        	Thread.sleep(1000);
-        }  catch (InterruptedException e) {
-            
-            // gestion de l'erreur
-        }
-        
-        
-        jFrame.repaint();
+        Thread_Simu thread_Simu = new Thread_Simu (jFrame, data_AL.size());
         
         
 	}
