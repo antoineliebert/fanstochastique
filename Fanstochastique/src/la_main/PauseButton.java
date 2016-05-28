@@ -5,42 +5,83 @@ import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException; 
+import java.net.URL;
+
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class PauseButton extends JButton implements MouseListener{
 
-  private Image imgPause;
-  private Image imgPlay;
-  private Image imgDisp;
+
   private boolean isPaused;
   
-  public PauseButton(){
+  private ImageIcon imgPause;
+  private ImageIcon imgPlay;
+  
+	private JButton pauseLabel;
+	
+	private URL url;
+	private URL url1;
+	
+	private ClickID clickID;
+	
+  public PauseButton(ClickID clickID){
+
+	  this.clickID = clickID;
+	  
+    url = Main.class.getResource(
+            "/res/pause.png");
+	ImageIcon imgPause = new ImageIcon(url);
+
+  
+  url1 = Main.class.getResource(
+          "/res/play.png");
+	ImageIcon imgPlay = new ImageIcon(url1);
+
+	
+	pauseLabel = new JButton(imgPause);
    
-    try {
-      imgPause = ImageIO.read(new File("src/" + "pause.png"));
-      imgPlay = ImageIO.read(new File("src/" + "play.png"));
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-    
-   
-    imgDisp = imgPause;
+	pauseLabel.setBackground(Color.white);
+	
+	pauseLabel.addActionListener(new ActionListener() {          
+	    public void actionPerformed(ActionEvent e) {
+	         System.out.println("pause/play");
+	         
+	   	  if (isPaused){
+			  pauseLabel.setIcon(imgPause);
+			  isPaused = false;
+			  clickID.setIDPause(1);
+		  }
+		  else
+		  {
+			  pauseLabel.setIcon(imgPlay);
+			  isPaused = true;
+			  clickID.setIDPause(-1);
+		  }
+	    }
+	}); 
+	
     isPaused = false;
     
     this.addMouseListener(this);
   }
   
+  public JButton getPauseLabel(){
+	  return pauseLabel;
+  }
   
   public boolean getIsPaused() {
 	return isPaused;
 }
 
-
+/*
 public void paintComponent(Graphics g){
     Graphics2D g2d = (Graphics2D)g;
     g2d.clearRect(0, 0, this.getWidth(), this.getHeight());
@@ -48,21 +89,13 @@ public void paintComponent(Graphics g){
     //g2d.drawImage(imgDisp, this.getWidth()/3, 3, this);
     g2d.drawImage(imgDisp, 90, 3, this);
     //this.setBounds(0, 0, 50, 50);
-}
+}*/
 
   public void mouseClicked(MouseEvent event) { 
 	  
-	  System.out.println("paused_clicked");
-	  if (imgDisp == imgPause){
-		  imgDisp = imgPlay;
-		  isPaused = true;
-	  }		
-	  else
-	  {
-		  imgDisp = imgPause;
-		  isPaused = false;
-	  }
-	  //repaint();
+
+
+
 	  
   }
 

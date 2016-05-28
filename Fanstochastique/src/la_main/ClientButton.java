@@ -1,15 +1,21 @@
 package la_main;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException; 
+import java.net.URL;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 
@@ -27,6 +33,8 @@ public class ClientButton extends JComponent implements MouseListener{
   
   private ClickID clickID;
   
+  private JButton clientLabel;
+  
   public ClientButton(int clientID, int caisseID, Object status, Object theta_s, int dx, int dy, ClickID clickID){
    
 	  this.clientID = clientID;
@@ -38,19 +46,45 @@ public class ClientButton extends JComponent implements MouseListener{
 	  
 	  this.clickID = clickID;
     
+	  clientLabel = new JButton();
+	  
+	  
+	  if (status != "fake")
+	  {
+		  
+	  URL url = Main.class.getResource(
+	            "/res/" + status + ".png");
+		ImageIcon imgClient = new ImageIcon(url);
+		clientLabel .setIcon(imgClient);
+	  
+		clientLabel.setBackground(Color.white);
+		
+		clientLabel.addActionListener(new ActionListener() {          
+		    public void actionPerformed(ActionEvent e) {
+		    	clickID.setIDCaisse(caisseID, "Client");
+		  	  clickID.setIDClient(clientID);
+		    }
+		}); 
+		
+	  }
     this.addMouseListener(this);
   }
 
 
+  public JButton getClientLabel(){
+	  return clientLabel;
+  }
+  
+  /*
 public void paint(Graphics g) {
     Graphics2D g2 = (Graphics2D) g;
 
-	Image img1 = Toolkit.getDefaultToolkit().getImage("src/" + status + ".png");
+	Image img1 = Toolkit.getDefaultToolkit().getImage(status + ".png");
     
     if (status != "fake")
     	g2.drawImage(img1, dx, dy, this);
   }
-
+*/
   public void mouseClicked(MouseEvent event) { 
 	  clickID.setIDCaisse(caisseID, "Client");
 	  clickID.setIDClient(clientID);

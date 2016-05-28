@@ -9,6 +9,9 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
@@ -35,6 +38,7 @@ public class JFrameClass extends JFrame implements Observer {
 	private ClickID clickID;
 	
 	private int tempsEnCours;
+	private int rewindCpt;
 	
 	public JFrameClass(ArrayList<ArrayList<Caisse>> data_AL, ClickID clickID) {
 
@@ -42,16 +46,19 @@ public class JFrameClass extends JFrame implements Observer {
 		this.clickID = clickID;
 		
 		this.tempsEnCours = 0;
+		this.rewindCpt = 1;
 		
-		this.pauseButton = new PauseButton();
+		this.pauseButton = new PauseButton(this.clickID);
 		this.forwardButton = new ForwardButton();
 		this.rewindButton = new RewindButton();
+
 		
 		pausePanel = new JPanel();
 		pausePanel.setLayout(new GridLayout(1,3));
-		pausePanel.add(pauseButton);
-		pausePanel.add(rewindButton);
-		pausePanel.add(forwardButton);
+		pausePanel.add(pauseButton.getPauseLabel());
+		//pausePanel.add(rewindButton.getRewLabel());
+		pausePanel.add(rewindButton.getRewLabel());
+		pausePanel.add(forwardButton.getForLabel());
 		
 		frame = new JFrame("Processus stochastiques appliqués au problème de la file d'attente");
 	
@@ -89,6 +96,11 @@ public class JFrameClass extends JFrame implements Observer {
 		statsCaissePanel = new JPanel();
 		statsClientPanel = new JPanel();
 		
+		/*
+		pausePanel.removeAll();
+		pausePanel.add(pauseButton.getPauseLabel());
+		pausePanel.add(rewindButton.getRewLabel());
+		pausePanel.add(forwardButton.getForLabel());*/
 		
 		pausePanel.setBackground(Color.white);
 		simuPanel.setBackground(Color.white);
@@ -149,14 +161,16 @@ public class JFrameClass extends JFrame implements Observer {
 		//System.out.println(nbClientsMax + " " + nbCaisses);
 
 		for (int i = 0; i < nbCaisses; i++){
-			simuPanel.add(new CaisseButton(i, data_AL.get(tempsEnCours).get(i).getStatus(), (700/nbCaisses)-(700/(2*nbCaisses)), 0, clickID));
+			CaisseButton caissTmp = new CaisseButton(i, data_AL.get(tempsEnCours).get(i).getStatus(), (700/nbCaisses)-(700/(2*nbCaisses)), 0, clickID);
+			simuPanel.add(caissTmp.getCaisseLabel());
 			//simuPanel.add(new CaisseButton(i,0, 0));
 			
 		}
 
 		for (int j = 0; j < nbClientsMax; j++){
 			for (int i = 0; i < nbCaisses; i++){
-				simuPanel.add(new ClientButton(j, i, data_AL.get(tempsEnCours).get(i).getClients().get(j).get(0), data_AL.get(tempsEnCours).get(i).getClients().get(j).get(1), (700/nbCaisses)-(700/(2*nbCaisses)), 0, clickID));
+				ClientButton clientTmp = new ClientButton(j, i, data_AL.get(tempsEnCours).get(i).getClients().get(j).get(0), data_AL.get(tempsEnCours).get(i).getClients().get(j).get(1), (700/nbCaisses)-(700/(2*nbCaisses)), 0, clickID);
+				simuPanel.add(clientTmp.getClientLabel());
 			}
 		}
 		
