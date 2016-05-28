@@ -1,5 +1,6 @@
 package la_main;
 
+import java.awt.BorderLayout;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -11,6 +12,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 //public class CaisseButton extends JButton implements MouseListener{
 public class CaisseButton extends JComponent implements MouseListener{
@@ -18,45 +21,35 @@ public class CaisseButton extends JComponent implements MouseListener{
   private Image imgDisp;
   
   private int caisseID;
+  private String status;
   private int dx;
   private int dy;
   
-  public CaisseButton(int caisseID, int dx, int dy){
+  
+  private ClickID clickID;
+  
+  public CaisseButton(int caisseID, String status, int dx, int dy, ClickID clickID){
    
 	  this.caisseID = caisseID;
+	  this.status = status;
 	  this.dx = dx;
 	  this.dy = dy;
-    
+	  this.clickID = clickID;
     this.addMouseListener(this);
   }
 
-/*
-public void paintComponent(Graphics g){
-    Graphics2D g2d = (Graphics2D)g;
-    
-    //g2d.clearRect(0, 0, this.getWidth(), this.getHeight());
-    //g2d.drawImage(imgDisp, 0, 0, this.getWidth(), this.getHeight(), this);
-    
 
-    //g2d.drawImage(imgDisp, 0, 0, 30, 30, this);
-    g2d.drawImage(imgDisp, dx, dy, this);
-    
-    //this.setBounds(0, 0, 30, 30);
-    //this.setBounds(dx, dy, dx+30, dy+30);
-    //this.setBounds(0, 0, this.getWidth(), this.getHeight());
-    
-}
-*/
 public void paint(Graphics g) {
     Graphics2D g2 = (Graphics2D) g;
-
-    Image img1 = Toolkit.getDefaultToolkit().getImage("caisse.png");
+    
+    Image img1 = Toolkit.getDefaultToolkit().getImage("src/" + status + ".png");
     g2.drawImage(img1, dx, dy, this);
     //g2.finalize();
   }
 
   public void mouseClicked(MouseEvent event) { 
-System.out.println("caisse : " + caisseID);
+	  
+	  clickID.setIDCaisse(caisseID, "Caisse");
   }
 
   //Méthode appelée lors du survol de la souris

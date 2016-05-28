@@ -11,6 +11,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 
 //public class CaisseButton extends JButton implements MouseListener{
 public class ClientButton extends JComponent implements MouseListener{
@@ -18,50 +19,42 @@ public class ClientButton extends JComponent implements MouseListener{
   private Image imgDisp;
   
   private int clientID;
+  private int caisseID;
   private int dx;
   private int dy;
-  private String happyness;
-  private String theta_s;
+  private String status;
+  private double theta_s;
   
-  public ClientButton(int clientID, String happyness, String theta_s, int dx, int dy){
+  private ClickID clickID;
+  
+  public ClientButton(int clientID, int caisseID, Object status, Object theta_s, int dx, int dy, ClickID clickID){
    
 	  this.clientID = clientID;
-	  this.happyness = happyness;
-	  this.theta_s = theta_s;
+	  this.caisseID = caisseID;
+	  this.status = status.toString();
+	  this.theta_s = (double) theta_s;
 	  this.dx = dx;
 	  this.dy = dy;
+	  
+	  this.clickID = clickID;
     
     this.addMouseListener(this);
   }
 
-/*
-public void paintComponent(Graphics g){
-    Graphics2D g2d = (Graphics2D)g;
-    
-    //g2d.clearRect(0, 0, this.getWidth(), this.getHeight());
-    //g2d.drawImage(imgDisp, 0, 0, this.getWidth(), this.getHeight(), this);
-    
 
-    //g2d.drawImage(imgDisp, 0, 0, 30, 30, this);
-    g2d.drawImage(imgDisp, dx, dy, this);
-    
-    //this.setBounds(0, 0, 30, 30);
-    //this.setBounds(dx, dy, dx+30, dy+30);
-    //this.setBounds(0, 0, this.getWidth(), this.getHeight());
-    
-}
-*/
 public void paint(Graphics g) {
     Graphics2D g2 = (Graphics2D) g;
 
-	Image img1 = Toolkit.getDefaultToolkit().getImage(happyness + ".png");
+	Image img1 = Toolkit.getDefaultToolkit().getImage("src/" + status + ".png");
     
-    if (happyness != "fake")
+    if (status != "fake")
     	g2.drawImage(img1, dx, dy, this);
   }
 
   public void mouseClicked(MouseEvent event) { 
-System.out.println("client : " + clientID);
+	  clickID.setIDCaisse(caisseID, "Client");
+	  clickID.setIDClient(clientID);
+	  
   }
 
   //Méthode appelée lors du survol de la souris

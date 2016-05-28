@@ -12,32 +12,29 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JButton;
 
-public class PauseButton extends JButton implements MouseListener{
+public class ForwardButton extends JButton implements MouseListener{
 
-  private Image imgPause;
-  private Image imgPlay;
-  private Image imgDisp;
-  private boolean isPaused;
+  private Image imgForward;
+  private int forwardCpt;
   
-  public PauseButton(){
+  public ForwardButton(){
    
     try {
-      imgPause = ImageIO.read(new File("src/" + "pause.png"));
-      imgPlay = ImageIO.read(new File("src/" + "play.png"));
+    	imgForward = ImageIO.read(new File("src/" + "forward.png"));
+      
     } catch (IOException e) {
       e.printStackTrace();
     }
     
    
-    imgDisp = imgPause;
-    isPaused = false;
+    forwardCpt = 1;
     
     this.addMouseListener(this);
   }
   
   
-  public boolean getIsPaused() {
-	return isPaused;
+  public int getForwardCpt() {
+	return forwardCpt;
 }
 
 
@@ -45,24 +42,14 @@ public void paintComponent(Graphics g){
     Graphics2D g2d = (Graphics2D)g;
     g2d.clearRect(0, 0, this.getWidth(), this.getHeight());
     //g2d.drawImage(imgDisp, 0, 0, this.getWidth(), this.getHeight(), this);
-    //g2d.drawImage(imgDisp, this.getWidth()/3, 3, this);
-    g2d.drawImage(imgDisp, 90, 3, this);
+    g2d.drawImage(imgForward, 90, 3, this);
+    //g2d.drawImage(imgForward, 0, 3, this);
     //this.setBounds(0, 0, 50, 50);
 }
 
   public void mouseClicked(MouseEvent event) { 
 	  
-	  System.out.println("paused_clicked");
-	  if (imgDisp == imgPause){
-		  imgDisp = imgPlay;
-		  isPaused = true;
-	  }		
-	  else
-	  {
-		  imgDisp = imgPause;
-		  isPaused = false;
-	  }
-	  //repaint();
+	  forwardCpt += 1;
 	  
   }
 

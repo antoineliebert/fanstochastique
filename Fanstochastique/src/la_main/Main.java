@@ -28,11 +28,15 @@ public class Main {
 
         data_AL = importTheJSON();
         
-        JFrameClass jFrame = new JFrameClass(data_AL);
+		ClickID clickID = new ClickID();
+        JFrameClass jFrame = new JFrameClass(data_AL, clickID);
+
+		
+		clickID.addObserver(jFrame);
 		
         jFrame.paint();
         
-        Thread_Simu thread_Simu = new Thread_Simu (jFrame, data_AL.size());
+        Thread_Simu thread_Simu = new Thread_Simu (jFrame, data_AL.size(), clickID);
         
         
 	}
@@ -54,24 +58,23 @@ public class Main {
         
         ArrayList<ArrayList<Caisse>> data_AL = new ArrayList<ArrayList<Caisse>>();
         ArrayList<Caisse> ti_AL = new ArrayList<Caisse>(); // ti_AL contient le string temps et un objet Caisse
-        ArrayList<ArrayList<String>> clients_AL = new ArrayList<ArrayList<String>>();
-        ArrayList<String> clientSeul_AL = new ArrayList<String>();
+        ArrayList<ArrayList<Object>> clients_AL = new ArrayList<ArrayList<Object>>();
+        ArrayList<Object> clientSeul_AL = new ArrayList<Object>();
 
         
         String name;
         String status;
-        String v_moy;
-        String v_max;
-        String client_total;
-        String happy_client;
-        String unhappy_client;
+        double max_speed;
+        double avg_speed;
+        int total_clients;
+        int happy_client;
+        int unhappy_client;
         String statusClient;
-        String theta_s;
+        double theta_s;
         
         try {
- 
-            
-            String content = readFile("format.json", StandardCharsets.UTF_8);
+
+            String content = readFile("results.json", StandardCharsets.UTF_8);
             
             JSONObject jsonRootObject = new JSONObject(content);
 
@@ -83,7 +86,7 @@ public class Main {
             	
             	ti_AL = new ArrayList<Caisse>();
             	
-            	jsonCaisseArray = time_JSONobj.optJSONArray("caisses"); // L'array de json objects caisses
+            	jsonCaisseArray = time_JSONobj.optJSONArray("checkouts"); // L'array de json objects caisses
             	
             	for (int j = 0; j < jsonCaisseArray.length(); j++){ // pour chaque caisse j
             		JSONObject caisse_JSONobj = jsonCaisseArray.getJSONObject(j);
@@ -91,31 +94,41 @@ public class Main {
             		            		
             		name = caisse_JSONobj.optString("name");
             		status = caisse_JSONobj.optString("status");
-            		v_moy = caisse_JSONobj.optString("v_moy");
-            		v_max = caisse_JSONobj.optString("v_max");
-            		client_total = caisse_JSONobj.optString("client_total");
-            		happy_client = caisse_JSONobj.optString("happy_client");
-            		unhappy_client = caisse_JSONobj.optString("unhappy_client");
-            		//System.out.println(client_total);
-            		jsonClientsArray = caisse_JSONobj.optJSONArray("clients"); // L'array de json objects clients
+            		max_speed = caisse_JSONobj.optDouble("max_speed");
+            		avg_speed = caisse_JSONobj.optDouble("avg_speed");
+            		total_clients = caisse_JSONobj.optInt("total_clients");
+            		happy_client = caisse_JSONobj.optInt("happy_client");
+            		unhappy_client = caisse_JSONobj.optInt("unhappy_client");
 
-            		clients_AL = new ArrayList<ArrayList<String>>();
-            		
-            		for (int k = 0; k < jsonClientsArray.length(); k++){ // pour chaque client k
-            			JSONObject client_JSONobj = jsonClientsArray.getJSONObject(k);
-
-            			clientSeul_AL = new ArrayList<String>();
-            			
-            			statusClient = client_JSONobj.optString("status");
-            			theta_s = client_JSONobj.optString("theta_s");
-            			clientSeul_AL.add(statusClient);
-            			clientSeul_AL.add(theta_s);
-            			
+            		if (caisse_JSONobj.optJSONArray("clients") != null)
+            		{
+	            		jsonClientsArray = caisse_JSONobj.optJSONArray("clients"); // L'array de json objects clients
+	            		clients_AL = new ArrayList<ArrayList<Object>>();
+	            		
+	            		for (int k = 0; k < jsonClientsArray.length(); k++){ // pour chaque client k
+	            			JSONObject client_JSONobj = jsonClientsArray.getJSONObject(k);
+	
+	            			clientSeul_AL = new ArrayList<Object>();
+	            			
+	            			statusClient = client_JSONobj.optString("status");
+	            			theta_s = client_JSONobj.optDouble("theta_s");
+	            			clientSeul_AL.add(statusClient);
+	            			clientSeul_AL.add(theta_s);
+	            			
+	            			clients_AL.add(clientSeul_AL);
+	            			
+	            		}
+            		}
+            		else
+            		{
+            			clients_AL = new ArrayList<ArrayList<Object>>();
+            			clientSeul_AL = new ArrayList<Object>();
+            			clientSeul_AL.add("fake");
+            			clientSeul_AL.add(0.0);
             			clients_AL.add(clientSeul_AL);
-            			
             		}
             		
-            		ti_AL.add(new Caisse(name,status,v_moy,v_max,client_total, happy_client, unhappy_client,clients_AL));
+            		ti_AL.add(new Caisse(name,status,avg_speed,max_speed,total_clients, happy_client, unhappy_client,clients_AL));
             		
             		
             	}
@@ -126,7 +139,8 @@ public class Main {
             
             //System.out.println(data_AL.get(0).get(1).getClients().get(2).get(0));
  
-
+			int a = 2 ;
+			
         } catch (Exception e) {
             e.printStackTrace();
         }
