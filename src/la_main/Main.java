@@ -97,8 +97,8 @@ public class Main {
             		max_speed = caisse_JSONobj.optDouble("max_speed");
             		avg_speed = caisse_JSONobj.optDouble("avg_speed");
             		total_clients = caisse_JSONobj.optInt("total_clients");
-            		happy_client = caisse_JSONobj.optInt("happy_client");
-            		unhappy_client = caisse_JSONobj.optInt("unhappy_client");
+            		happy_client = caisse_JSONobj.optInt("happy_clients");
+            		unhappy_client = caisse_JSONobj.optInt("unhappy_clients");
 
             		if (caisse_JSONobj.optJSONArray("clients") != null)
             		{
