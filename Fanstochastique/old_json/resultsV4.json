@@ -1,0 +1,82 @@
+{
+   "data":[
+      {
+         "checkouts":[
+            {
+               "name":"c1",
+               "status":"open",
+               "avg_speed":1,
+               "max_speed":3.4,
+               "total_clients":3,
+               "happy_client":1,
+               "unhappy_client":1,
+			   "clients": [
+					{"status":"happy",
+					 "theta_s":10},
+					{"status": "neutral",
+					 "theta_s": 15},
+					{"status": "unhappy",
+					 "theta_s": 1}
+				]
+            },
+            {
+               "name":"c2",
+               "status":"closed",
+               "avg_speed":0.4,
+               "max_speed":2.4,
+               "total_clients":4,
+               "happy_client":2,
+               "unhappy_client":2,
+			   "clients": [
+					{"status":"happy",
+					 "theta_s":10},
+					{"status":"happy",
+					 "theta_s":8},
+					{"status": "unhappy",
+					 "theta_s": 3},
+					{"status": "unhappy",
+					 "theta_s": 1}
+				]
+            }
+         ]
+      },
+      {
+         "checkouts":[
+            {
+               "name":"c1",
+               "status":"closed",
+               "avg_speed":1.5,
+               "max_speed":3.4,
+               "total_clients":1,
+               "happy_client":1,
+               "unhappy_client":0,
+			   "clients": [
+					{"status":"happy",
+					 "theta_s":10}
+				]
+            },
+            {
+               "name":"c2",
+               "status":"closed",
+               "avg_speed":0.9,
+               "max_speed":2.4,
+               "total_clients":5,
+               "happy_client":2,
+               "unhappy_client":1,
+			   "clients": [
+					{"status":"happy",
+					 "theta_s":10},
+					{"status": "neutral",
+					 "theta_s": 15},
+					{"status": "happy",
+					 "theta_s": 1},
+					{"status": "neutral",
+					 "theta_s": 15},
+					{"status": "unhappy",
+					 "theta_s": 1}
+				]
+            }
+         ]
+      }
+   ]
+}
