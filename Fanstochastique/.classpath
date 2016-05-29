@@ -16,7 +16,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Anto/git/fanstochastique/Fanstochastique/src/res/java-json.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Anto/git/fanstochastique/Fanstochastique/src/res/json-simple-1.1.jar"/>
+	<classpathentry kind="lib" path="src/res/java-json.jar"/>
+	<classpathentry kind="lib" path="src/res/json-simple-1.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
