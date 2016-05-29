@@ -20,7 +20,7 @@ public class Thread_Simu {
 		while (tNow < tMax-1) {
 		
 			try {
-		    	Thread.sleep(jFrameClass.getRewindButton().getRewindCpt()*5000/jFrameClass.getForwardButton().getForwardCpt());
+		    	Thread.sleep(jFrameClass.getRewindButton().getRewindCpt()*1000/jFrameClass.getForwardButton().getForwardCpt());
 		    	if (!jFrameClass.getPauseButton().getIsPaused())
 		    	{
 		    	tNow += 1;

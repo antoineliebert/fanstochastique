@@ -47,7 +47,6 @@ public class RewindButton extends JButton implements MouseListener{
     
     rewLabel.addActionListener(new ActionListener() {          
 	    public void actionPerformed(ActionEvent e) {
-	         System.out.println("Rewind");
 	         rewindCpt += 1;
 	    }
 	}); 

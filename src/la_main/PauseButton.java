@@ -52,7 +52,6 @@ public class PauseButton extends JButton implements MouseListener{
 	
 	pauseLabel.addActionListener(new ActionListener() {          
 	    public void actionPerformed(ActionEvent e) {
-	         System.out.println("pause/play");
 	         
 	   	  if (isPaused){
 			  pauseLabel.setIcon(imgPause);

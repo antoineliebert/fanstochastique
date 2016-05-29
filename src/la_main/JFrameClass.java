@@ -54,11 +54,15 @@ public class JFrameClass extends JFrame implements Observer {
 
 		
 		pausePanel = new JPanel();
-		pausePanel.setLayout(new GridLayout(1,3));
+		pausePanel.setLayout(new GridLayout(1,4));
 		pausePanel.add(pauseButton.getPauseLabel());
 		//pausePanel.add(rewindButton.getRewLabel());
 		pausePanel.add(rewindButton.getRewLabel());
-		pausePanel.add(forwardButton.getForLabel());
+		pausePanel.add(forwardButton.getForLabel());		
+		JLabel tempsEnCoursLabel = new JLabel("t"+tempsEnCours);
+		tempsEnCoursLabel.setHorizontalAlignment(JLabel.CENTER);
+		tempsEnCoursLabel.setVerticalAlignment(JLabel.CENTER);
+		pausePanel.add(tempsEnCoursLabel);
 		
 		frame = new JFrame("Processus stochastiques appliqués au problème de la file d'attente");
 	
@@ -96,11 +100,15 @@ public class JFrameClass extends JFrame implements Observer {
 		statsCaissePanel = new JPanel();
 		statsClientPanel = new JPanel();
 		
-		/*
+		
 		pausePanel.removeAll();
 		pausePanel.add(pauseButton.getPauseLabel());
 		pausePanel.add(rewindButton.getRewLabel());
-		pausePanel.add(forwardButton.getForLabel());*/
+		pausePanel.add(forwardButton.getForLabel());
+		JLabel tempsEnCoursLabel = new JLabel("t"+tempsEnCours);
+		tempsEnCoursLabel.setHorizontalAlignment(JLabel.CENTER);
+		tempsEnCoursLabel.setVerticalAlignment(JLabel.CENTER);
+		pausePanel.add(tempsEnCoursLabel);
 		
 		pausePanel.setBackground(Color.white);
 		simuPanel.setBackground(Color.white);
@@ -181,7 +189,7 @@ public class JFrameClass extends JFrame implements Observer {
 	    
 	    
 	    JSplitPane simuAndButtonPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, pausePanel, simuPanel);
-	    simuAndButtonPanel.setResizeWeight(0.08);
+	    simuAndButtonPanel.setResizeWeight(0.56/nbClientsMax);
 	    
 	    JSplitPane fullPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, simuAndButtonPanel, statsPanel);
 	    fullPanel.setResizeWeight(0.95);
@@ -194,7 +202,7 @@ public class JFrameClass extends JFrame implements Observer {
 	    //Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 	    //frame.setBounds((int) screenSize.getWidth() - frameWidth, 0, frameWidth, frameHeight);
 	    
-		frame.setSize(1000,600);
+		frame.setSize(1000,800);
 		frame.setLocationRelativeTo(null);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);

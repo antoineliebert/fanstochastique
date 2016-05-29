@@ -35,7 +35,6 @@ public class ForwardButton extends JButton implements MouseListener{
     
     forLabel.addActionListener(new ActionListener() {          
 	    public void actionPerformed(ActionEvent e) {
-	         System.out.println("forward");
 	         forwardCpt += 1;
 	    }
 	}); 
