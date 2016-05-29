@@ -189,7 +189,7 @@ public class JFrameClass extends JFrame implements Observer {
 	    
 	    
 	    JSplitPane simuAndButtonPanel = new JSplitPane(JSplitPane.VERTICAL_SPLIT, pausePanel, simuPanel);
-	    simuAndButtonPanel.setResizeWeight(0.56/nbClientsMax);
+	    simuAndButtonPanel.setResizeWeight(0.56/(nbClientsMax+1));
 	    
 	    JSplitPane fullPanel = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, simuAndButtonPanel, statsPanel);
 	    fullPanel.setResizeWeight(0.95);
